@@ -1,0 +1,27 @@
+# Python 캐시 파일
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 가상환경
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 테스트 파일
+test_*.py
+
+# Git
+.git/
+.gitignore
+
+# 임시 파일
+*.log
+*.tmp
