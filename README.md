@@ -39,31 +39,6 @@ docker logs -f backend-api
 - Swagger UI: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
 
-      "end_time": 15.5
-    }
-  ]
-}
-```
-
-## 데이터 구조
-
-### `app/data/lectures.json`
-강의 메타데이터 관리
-
-### `app/data/frames.json`
-각 강의의 프레임 이미지와 타임스탬프 매핑 정보
-- `frame_image`: 고유 프레임 이미지 파일명
-- `start_time`: 프레임 시작 시간(초)
-- `end_time`: 프레임 종료 시간(초)
-
-## 프론트엔드 구현 가이드
-
-1. 강의 목록 페이지: `GET /api/lectures` 호출하여 리스트 표시
-2. 강의 선택 시: `GET /api/lectures/{lecture_id}` 호출
-3. 모든 프레임 이미지 미리 로드
-4. 현재 재생 시간에 따라 해당 프레임 표시
-   - 예: 현재 시간 20초 → `start_time <= 20 < end_time` 인 프레임 찾아서 표시
-
 ## 프로젝트 구조
 
 ```
