@@ -25,6 +25,7 @@ markdown==3.7
 
 # --- LLM 관련 ---
 openai==1.54.4
+httpx==0.27.2  # openai 1.54.4 호환 버전
 
 # --- PyTorch GPU ---
 # torch==2.9.1+cu130  # CUDA 13.0 환경 기준
