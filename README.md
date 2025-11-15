@@ -1,103 +1,44 @@
-# AI Lecture Platform API
+# Backend API
 
-3D 모션 기반 AI 강의 플랫폼 백엔드 서버
+## 로컬 실행
 
-## 아키텍처 개요
-
-- **영상 방식**: PPT처럼 정적 프레임들로 구성 (움직이는 객체 없음)
-- **프레임 전달**: 처음에 모든 고유 프레임 이미지를 내려주고, 시간 매핑 정보로 프론트에서 프레임 전환
-- **데이터 저장**: DB 없이 JSON 파일로 간단하게 관리 (해커톤용)
-
-## 설치
-
+1. **환경 설정**
 ```bash
 pip install -r requirements.txt
 ```
 
-## 실행
+2. **환경 변수 설정**
+- `.env.example`을 `.env`로 복사
+- `OPENAI_API_KEY` 설정
+- `credential.json` (Google Cloud TTS) 파일 추가
 
+3. **서버 실행**
 ```bash
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+## Docker 실행
+
+1. **이미지 빌드**
+```bash
+docker build -t backend-api:latest .
+```
+
+2. **컨테이너 실행**
+```bash
+docker run -d --name backend-api -p 8000:8000 backend-api:latest
+```
+
+3. **로그 확인**
+```bash
+docker logs -f backend-api
 ```
 
 ## API 문서
 
-서버 실행 후 다음 URL에서 확인 가능합니다:
 - Swagger UI: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
 
-## API 엔드포인트
-
-### Lectures
-
-#### 1. 강의 목록 조회
-```
-GET /api/lectures
-```
-- 모든 강의 리스트 반환
-- 썸네일, 제목, 설명, 강사, 카테고리, 재생시간 포함
-
-**응답 예시:**
-```json
-[
-  {
-    "id": 1,
-    "title": "파이썬 기초 - 변수와 자료형",
-    "description": "파이썬의 기본 변수와 자료형에 대해 배웁니다",
-    "thumbnail": "lecture_1_thumb.jpg",
-    "duration": 300,
-    "instructor": "김코딩",
-    "category": "Programming"
-  }
-]
-```
-
-#### 2. 강의 상세 정보 조회
-```
-GET /api/lectures/{lecture_id}
-```
-- 강의 기본 정보 + 모든 프레임 정보 반환
-- 프론트에서 영상 재생 시 필요한 모든 데이터 한 번에 제공
-
-**응답 예시:**
-```json
-{
-  "id": 1,
-  "title": "파이썬 기초 - 변수와 자료형",
-  "description": "파이썬의 기본 변수와 자료형에 대해 배웁니다",
-  "thumbnail": "lecture_1_thumb.jpg",
-  "duration": 300,
-  "instructor": "김코딩",
-  "category": "Programming",
-  "frames": [
-    {
-      "frame_image": "lecture_1_frame_001.jpg",
-      "start_time": 0.0,
-      "end_time": 15.5
-    },
-    {
-      "frame_image": "lecture_1_frame_002.jpg",
-      "start_time": 15.5,
-      "end_time": 45.2
-    }
-  ]
-}
-```
-
-#### 3. 강의 프레임 정보만 조회
-```
-GET /api/lectures/{lecture_id}/frames
-```
-- 프레임 정보만 필요한 경우 사용
-
-**응답 예시:**
-```json
-{
-  "lecture_id": 1,
-  "frames": [
-    {
-      "frame_image": "lecture_1_frame_001.jpg",
-      "start_time": 0.0,
       "end_time": 15.5
     }
   ]
